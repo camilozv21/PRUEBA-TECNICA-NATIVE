@@ -23,6 +23,7 @@ npm install
 ```bash
 npm start
 ```
+### En otra terminal: 
 
 ## Paso 4: Iniciar la aplicacion
 
