@@ -21,7 +21,7 @@ function listCarts() {
     <SafeAreaView style={{height: windowHeight}}>
       <ScrollView>
         {cart.map((product, idx) => (
-          <View key={product.id + idx} style={styles.container}>
+          <View key={product.id + idx + product.image} style={styles.container}>
             <View style={styles.infoContainer}>
               <Image
                 source={{uri: product.image}}

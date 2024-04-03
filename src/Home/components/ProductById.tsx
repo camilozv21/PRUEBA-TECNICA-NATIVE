@@ -56,7 +56,7 @@ function ProductById({id}) {
           {product && product.image ? (
             <>
               <View style={styles.infoContainer}>
-                <Text style={{fontSize: 12}}>Nuevo | +1000 vendidos</Text>
+                <Text style={{fontSize: 12, color: '#888'}}>Nuevo | +1000 vendidos</Text>
                 <Text style={{color: '#fc5a03'}}>
                   {product.rating.rate} ★★★★☆({product.rating.count})
                 </Text>
@@ -77,7 +77,7 @@ function ProductById({id}) {
                 style={{color: '#178a00', fontSize: 17, fontWeight: 'bold'}}>
                 Free return
               </Text>
-              <Text>You have 30 days after you receive it</Text>
+              <Text style={{color: '#888888'}}>You have 30 days after you receive it</Text>
               <Text style={{color: '#fc5a03'}}>Learn more</Text>
               <Text style={{color: '#000', fontSize: 16, marginVertical: 10}}>
                 Stock available
@@ -91,6 +91,7 @@ function ProductById({id}) {
                     fontSize: 16,
                     marginVertical: 10,
                     paddingLeft: '20%',
+                    color: '#888888'
                   }}>
                   (5 available)
                 </Text>
@@ -116,10 +117,14 @@ function ProductById({id}) {
                 </View>
                 <Text style={{color: '#000', fontWeight: 600}}>+500 solds</Text>
               </View>
-              <View style={{flexDirection: 'row', flex: 1}}>
-                <Text style={{color: '#fc5a03'}}>🛡️ Protected purchase, </Text>
-                <Text style={{color: '#000'}}>
-                  receive the product you were expecting.
+              <View>
+                <Text style={{flexWrap: 'wrap'}}>
+                  <Text style={{color: '#fc5a03'}}>
+                    🛡️ Protected purchase,{' '}
+                  </Text>
+                  <Text style={{color: '#000'}}>
+                    receive the product you were expecting.
+                  </Text>
                 </Text>
               </View>
               <Text

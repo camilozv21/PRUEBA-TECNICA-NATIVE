@@ -35,7 +35,7 @@ function ListProducts(): React.JSX.Element {
   const getProductsBySearch = useCallback(async () => {
     try {
       const response = await instance.get<Product[]>(
-        `/products/category/${searchTerm}`,
+        `/products/category/${searchTerm.toLowerCase().trim()}`,
       );
       setProducts(response.data);
     } catch (error) {
@@ -73,10 +73,15 @@ function ListProducts(): React.JSX.Element {
       <ScrollView>
         <TextInput
           style={styles.searchBar}
-          placeholder="🔍electronics, jewelery, men's clothing, women's clothing"
+          placeholder="🔍electronics, jewelery..."
+          placeholderTextColor="#888888" 
           value={searchTerm}
           onChangeText={setSearchTerm}
         />
+        <Text style={{color: '#000', padding: 10}}>
+          This are the categories: electronics, jewelery, men's clothing,
+          women's clothing
+        </Text>
         <View style={styles.container}>
           <Text style={styles.header}>Inspired by the latest you saw</Text>
           <View
@@ -86,51 +91,58 @@ function ListProducts(): React.JSX.Element {
               marginVertical: 3,
             }}
           />
-          {products.map((product: Product, idx) => (
-            <View
-              style={{borderBottomColor: '#000', borderBottomWidth: 1}}
-              key={product.id + idx}>
-              <Pressable
-                onPress={() =>
-                  navigation.navigate('ProductDetail', {id: product.id})
-                }>
-                <View style={styles.card} key={product.id}>
-                  <View style={styles.imageContainer}>
-                    <Image source={{uri: product.image}} style={styles.image} />
+          {products.length === 0 ? (
+            <Text>Loading...</Text>
+          ) : (
+            products.map((product: Product, idx) => (
+              <View
+                style={{borderBottomColor: '#000', borderBottomWidth: 1}}
+                key={product.id + idx}>
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate('ProductDetail', {id: product.id})
+                  }>
+                  <View style={styles.card} key={product.id}>
+                    <View style={styles.imageContainer}>
+                      <Image
+                        source={{uri: product.image}}
+                        style={styles.image}
+                      />
+                    </View>
+                    <View style={styles.infoContainer}>
+                      <Text
+                        style={styles.title}
+                        numberOfLines={1}
+                        ellipsizeMode="tail">
+                        {product.title}
+                      </Text>
+                      <Text
+                        style={styles.description}
+                        numberOfLines={1}
+                        ellipsizeMode="tail">
+                        {product.description}
+                      </Text>
+                      <Text style={styles.price}>$ {product.price}</Text>
+                      <Text style={styles.shipping}>Free shipping</Text>
+                    </View>
                   </View>
-                  <View style={styles.infoContainer}>
-                    <Text
-                      style={styles.title}
-                      numberOfLines={1}
-                      ellipsizeMode="tail">
-                      {product.title}
-                    </Text>
-                    <Text
-                      style={styles.description}
-                      numberOfLines={1}
-                      ellipsizeMode="tail">
-                      {product.description}
-                    </Text>
-                    <Text style={styles.price}>$ {product.price}</Text>
-                    <Text style={styles.shipping}>Free shipping</Text>
-                  </View>
-                </View>
-              </Pressable>
-              <TouchableOpacity
-                style={styles.buttonCart}
-                disabled={isAdded(product)}
-                onPress={() => handleAddToCart(product)}>
-                <Text
-                  style={{
-                    color: '#fc5a03',
-                    fontSize: 16,
-                    fontWeight: '700',
-                  }}>
-                  {isAdded(product) ? 'Added to cart' : 'Add to cart'}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          ))}
+                </Pressable>
+                <TouchableOpacity
+                  style={styles.buttonCart}
+                  disabled={isAdded(product)}
+                  onPress={() => handleAddToCart(product)}>
+                  <Text
+                    style={{
+                      color: '#fc5a03',
+                      fontSize: 16,
+                      fontWeight: '700',
+                    }}>
+                    {isAdded(product) ? 'Added to cart' : 'Add to cart'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ))
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -215,6 +227,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 30,
     paddingLeft: 15,
+    color: '#000000',
+    
   },
 });
 
